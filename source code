@@ -89,9 +89,9 @@ while BookingStart.lower() == "yes":
 	
 	TotalCost = CheapestCost
 	
-	#calculate the cost of extra attraction if it requires
+	#calculate the cost of extra attraction if require
 	StartExtraAttraction = input("Do you need extra attraction tikets? Answer Yes or No")
-	while StartExtraAttraction.lower() == "yes":
+	if StartExtraAttraction.lower() == "yes":
 		if NumDay == 1:
 			ChoiceExtraAttraction = str(input("Which type of ticket you would like to book, lion feeding or penguin feeding. Please answer 1 or 2"))
 			if ChoiceExtraAttraction == "1":
@@ -108,9 +108,8 @@ while BookingStart.lower() == "yes":
 				PriceExtraAttraction = NumPeople * ExtraAttractionCost[2]
 				
 		print("Your extra attraction cost is: ",PriceExtraAttraction)
-		StartExtraAttraction = input("Do you need extra attraction tikets? Answer Yes or No")
 	#calculate the total cost
-	TotalCost = CheapestCost + PriceExtraAttraction
+		TotalCost = CheapestCost + PriceExtraAttraction
 	
 	# display booking detail 
 	print("-----------------------------------------------")
