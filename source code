@@ -1,0 +1,123 @@
+#Task 1
+
+#(a) store data in arrays for tickets and attractions 
+
+TicketType = ["one adult","one child","one senior","family ticket","group tickets"]
+CostOneDay = [20.00,12.00,16.00,60.00,15.00]
+CostTwoDay = [30.00,18.00,24.00,90.00,22.50]
+
+ExtraAttraction = ["lion feeding","penguin feeding","evening barbecue"]
+ExtraAttractionCost = [2.50,2.00,5.00]
+
+#(b) display for one day tickets 
+
+print("-----------------------------------------------")
+print("Ticket types \t\t\t CostOneDay")
+for count in range(0,len(TicketType)):
+	print(TicketType[count],"\t\t\t",CostOneDay[count])
+
+print("Extra Attraction \t\t\t Cost")
+for count in range(0,2):  #there only 2 attractions for oneday
+	print(ExtraAttraction[count],"\t\t\t",ExtraAttractionCost[count])
+print("----------------------------------------------- \n\n")
+
+#(c) display for two day tickets
+print("-----------------------------------------------")
+print("Tick types \t\t\t CostTwoDay")
+for count in range(0,len(TicketType)):
+	print(TicketType[count],"\t\t\t",CostTwoDay[count])
+	
+print("Extra Attraction \t\t\t Cost")
+for count in range(0,3): #there are 3 attractions for twodays tickets
+	print(ExtraAttraction[count],"\t\t\t",ExtraAttractionCost[count])
+print("-----------------------------------------------")
+
+
+# task 2
+
+BookingNumber = 0 #initialise unique booking number 
+print("Welcome to the wildlife park bookin syste \n You may book your tickets up to a week in advance.")
+
+BookingStart = str(input("Would you like to book? Answer Yes or No"))
+
+while BookingStart.lower() == "yes":
+	BookingNumber = BookingNumber + 1 #generate unique booking number 
+	
+	#asking user for booking detail 
+	NumDay = int(input("How many days you would like to book? Answer 1 or 2"))
+	while NumDay != 1 and NumDay!= 2:
+		NumDay = int(input("Please enter again, 1 or 2")) # validation : lookup check
+	if NumDay == 1:
+		PricePerTicket = CostOneDay
+	else:
+		PricePerTicket = CostTwoDay
+	
+	NumAdult = int(input("How many adult tickets?"))
+	NumChild = int(input("How many children tickets?"))
+	NumSenior = int(input("How many senior tickets?"))
+	DateOfWeek = input("Which day you would like to choose? Answer from Mon, Tue, Wed, Thu, Fri, Sat, Sun .")
+	
+	while NumChild > (NumAdult+NumSenior) * 2:
+		NumChild = int(input("Error, each adult can only accompany up to 2 children in your group. Please enter the number of children in your group again: "))
+		
+	#calculation the total cost
+	NumPeople = NumAdult + NumChild + NumSenior
+	
+	CostSeparate = NumAdult * PricePerTicket[0] + NumChild * PricePerTicket[1] + NumSenior * PricePerTicket[2]
+	print("The cost of this group to pay as seperate ticket is: ",CostSeparate)
+	
+	#family ticket calculation 
+	if (NumAdult + NumSenior) * 2 >= NumChild:
+		CostFamily = PricePerTicket[3] * round((NumAdult + NumSenior)/2)
+		print("You have up to 3 children for every 2 adults. Family ticket allowed. The cost as family tickets is: ", CostFamily)
+	
+	#group ticket calculation
+	if NumPeople >= 6:
+		CostGroup = NumPeople * PricePerTicket[4]
+		print("There are at least 6 people in your group. Group ticket allowed. The cost as group ticket is: ", CostGroup)
+	
+	#calculate the cheapest price 
+	if CostSeparate < CostFamily and CostSeparate < CostGroup :
+		CheapestCost = CostSeparate
+		print("It is cheaper for you to buy seperate ticket and pay: ", CheapestCost)
+	elif CostFamily < CostSeparate and CostFamily < CostGroup :
+		CheapestCost = CostFamily
+		print("It is cheaper for you to buy family ticket and pay: ", CheapestCost)
+	else:
+		CheapestCost = CostGroup
+		print("It is cheaper for you to buy group ticket and pay: ", CheapestCost)
+	
+	TotalCost = CheapestCost
+	
+	#calculate the cost of extra attraction if it requires
+	StartExtraAttraction = input("Do you need extra attraction tikets? Answer Yes or No")
+	while StartExtraAttraction.lower() == "yes":
+		if NumDay == 1:
+			ChoiceExtraAttraction = str(input("Which type of ticket you would like to book, lion feeding or penguin feeding. Please answer 1 or 2"))
+			if ChoiceExtraAttraction == "1":
+				PriceExtraAttraction = NumPeople * ExtraAttractionCost[0]
+			else:
+				PriceExtraAttraction = NumPeople * ExtraAttractionCost[1]
+		else:
+			ChoiceExtraAttraction = str(input("Which type of ticket you would like to book, lion feeding or penguin feeding or evening barbecue. Please answer 1 or 2 or 3"))
+			if ChoiceExtraAttraction == "1":
+				PriceExtraAttraction = NumPeople * ExtraAttractionCost[0]
+			elif ChoiceExtraAttraction == "2":
+				PriceExtraAttraction = NumPeople * ExtraAttractionCost[1]
+			else:
+				PriceExtraAttraction = NumPeople * ExtraAttractionCost[2]
+				
+		print("Your extra attraction cost is: ",PriceExtraAttraction)
+		StartExtraAttraction = input("Do you need extra attraction tikets? Answer Yes or No")
+	#calculate the total cost
+	TotalCost = CheapestCost + PriceExtraAttraction
+	
+	# display booking detail 
+	print("-----------------------------------------------")
+	print("Your booking number is: ",BookingNumber)
+	print("Your booking date is: ",DateOfWeek)
+	print("Your total cost is: $", TotalCost)
+	print("-----------------------------------------------")
+	
+	BookingStart = str(input("Would you like to book? Answer Yes or No"))
+	
